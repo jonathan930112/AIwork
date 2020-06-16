@@ -136,3 +136,13 @@ for epoch in range(trainEpochs):
 duration =time()-startTime
 print("Train Finished takes:",duration)
 
+# matplotlib inline
+import matplotlib.pyplot as plt
+fig = plt.gcf()
+fig.set_size_inches(5,3)
+plt.plot(epoch_list, loss_list, label = 'loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['loss'])
+plt.show()
+
