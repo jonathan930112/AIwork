@@ -153,3 +153,7 @@ plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend()
 plt.show()
+
+print("Accuracy:", sess.run(accuracy,
+                           feed_dict={x: mnist.test.images,
+                                      y_label: mnist.test.labels}))
