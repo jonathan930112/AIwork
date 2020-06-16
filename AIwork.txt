@@ -94,3 +94,13 @@ loss_function = tf.reduce_mean(
 # 选择 optimizer
 optimizer = tf.train.AdamOptimizer(learning_rate=0.001) \
                     .minimize(loss_function)
+
+# 计算每一项数据是否正確预测
+# tf.equal,相等返回1，不等返回0
+correct_prediction = tf.equal(tf.argmax(y_label  , 1),
+                              tf.argmax(y_predict, 1))
+
+# 将計算预测正确结果，加权平均
+# 先使用 tf.cast 转化为 float，再使用 tf.reduce_mean 将所有值平均
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
+
