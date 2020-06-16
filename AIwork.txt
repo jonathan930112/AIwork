@@ -59,3 +59,13 @@ batch_images_xs, batch_labels_ys = \
     
 print(len(batch_images_xs),
       len(batch_labels_ys))
+
+def layer(output_dim,input_dim,inputs, activation=None):
+    W = tf.Variable(tf.random_normal([input_dim, output_dim]))
+    b = tf.Variable(tf.random_normal([1, output_dim]))
+    XWb = tf.matmul(inputs, W) + b
+    if activation is None:
+        outputs = XWb
+    else:
+        outputs = activation(XWb)
+    return outputs
