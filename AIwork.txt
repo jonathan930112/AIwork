@@ -157,3 +157,125 @@ plt.show()
 print("Accuracy:", sess.run(accuracy,
                            feed_dict={x: mnist.test.images,
                                       y_label: mnist.test.labels}))
+prediction_result=sess.run(tf.argmax(y_predict,1),
+                           feed_dict={x: mnist.test.images })
+prediction_result[:10]
+import matplotlib.pyplot as plt
+import numpy as np
+def plot_images_labels_prediction(images,labels,
+                                  prediction,idx,num=10):
+    fig = plt.gcf()
+    fig.set_size_inches(12, 14)
+    if num>25: num=25 
+    for i in range(0, num):
+        ax=plt.subplot(5,5, 1+i)
+        
+        ax.imshow(np.reshape(images[idx],(28, 28)), 
+                  cmap='binary')
+            
+        title= "label=" +str(np.argmax(labels[idx]))
+        if len(prediction)>0:
+            title+=",predict="+str(prediction[idx]) 
+            
+        ax.set_title(title,fontsize=10) 
+        ax.set_xticks([]);ax.set_yticks([])        
+        idx+=1 
+    plt.show()
+plot_images_labels_prediction(mnist.test.images,
+                              mnist.test.labels,
+                              prediction_result,0)
+y_predict_Onehot=sess.run(y_predict,
+                          feed_dict={x: mnist.test.images })
+
+y_predict_Onehot[0]
+for i in range(400):
+    if prediction_result[i]!=np.argmax(mnist.test.labels[i]):
+        print("i="+str(i)+
+              "   label=",np.argmax(mnist.test.labels[i]),
+              "predict=",prediction_result[i])
+x = tf.placeholder("float", [None, 784])
+
+h1=layer(output_dim=1000,input_dim=784,
+         inputs=x ,activation=tf.nn.relu)  
+
+y_predict=layer(output_dim=10,input_dim=1000,
+                    inputs=h1,activation=None)
+print("Accuracy:", sess.run(accuracy,
+                           feed_dict={x: mnist.test.images, 
+                                      y_label: mnist.test.labels}))
+x = tf.placeholder("float", [None, 784])
+
+h1=layer(output_dim=1000,input_dim=784,
+         inputs=x ,activation=tf.nn.relu) 
+
+h2=layer(output_dim=1000,input_dim=1000,
+         inputs=h1 ,activation=tf.nn.relu)  
+
+y_predict=layer(output_dim=10,input_dim=1000,
+                inputs=h2,activation=None)
+print("Accuracy:", sess.run(accuracy,
+                           feed_dict={x: mnist.test.images, 
+                                      y_label: mnist.test.labels}))
+def count2():
+    print np.sum([np.prod(v.get_shape().as_list()) for v in tf.trainable_variables()])
+def count1():
+    total_parameters = 0
+    for variable in tf.trainable_variables():
+        # shape is an array of tf.Dimension
+        shape = variable.get_shape()
+        # print(shape)
+        # print(len(shape))
+        variable_parameters = 1
+        for dim in shape:
+            # print(dim)
+            variable_parameters *= dim.value
+        # print(variable_parameters)
+        total_parameters += variable_parameters
+    print(total_parameters)
+
+def get_nb_params_shape(shape):
+    '''
+    Computes the total number of params for a given shap.
+    Works for any number of shapes etc [D,F] or [W,H,C] computes D*F and W*H*C.
+    '''
+    nb_params = 1
+    for dim in shape:
+        nb_params = nb_params*int(dim)
+    return (nb_params)
+
+def count3():
+    tot_nb_params = 0
+    for trainable_variable in tf.trainable_variables():
+        shape = trainable_variable.get_shape()  # e.g [D,F] or [W,H,C]
+        current_nb_params = get_nb_params_shape(shape)
+        tot_nb_params = tot_nb_params + current_nb_params
+    print (tot_nb_params)
+
+def count5():
+    total_parameters = 0
+    # iterating over all variables
+    for variable in tf.trainable_variables():
+        local_parameters = 1
+        shape = variable.get_shape()  # getting shape of a variable
+        for i in shape:
+            local_parameters *= i.value  # mutiplying dimension values
+        total_parameters += local_parameters
+    print(total_parameters)
+    
+def count6():
+    total_parameters = 0
+    for variable in tf.trainable_variables():
+        variable_parameters = 1
+        for dim in variable.get_shape():
+            variable_parameters *= dim.value
+        total_parameters += variable_parameters
+    print(total_parameters)
+    
+def count7():
+    from functools import reduce
+    from operator import mul
+    num_params = 0
+    for variable in tf.trainable_variables():
+        shape = variable.get_shape()
+        num_params += reduce(mul, [dim.value for dim in shape], 1)
+    print (num_params)
