@@ -48,3 +48,14 @@ def plot_images_labels_prediction(images,labels,
     plt.show()
 plot_images_labels_prediction(mnist.validation.images,
                               mnist.validation.labels,[],0)
+
+print('test images:', mnist.test.images.shape,
+      'labels:', mnist.test.labels.shape)
+plot_images_labels_prediction(mnist.test.images,
+                              mnist.test.labels,[],0)
+
+batch_images_xs, batch_labels_ys = \
+     mnist.train.next_batch(batch_size=100)
+    
+print(len(batch_images_xs),
+      len(batch_labels_ys))
