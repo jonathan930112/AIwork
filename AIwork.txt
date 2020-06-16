@@ -216,8 +216,7 @@ y_predict=layer(output_dim=10,input_dim=1000,
 print("Accuracy:", sess.run(accuracy,
                            feed_dict={x: mnist.test.images, 
                                       y_label: mnist.test.labels}))
-def count2():
-    print np.sum([np.prod(v.get_shape().as_list()) for v in tf.trainable_variables()])
+
 def count1():
     total_parameters = 0
     for variable in tf.trainable_variables():
