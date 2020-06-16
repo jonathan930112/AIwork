@@ -145,4 +145,11 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['loss'])
 plt.show()
-
+plt.plot(epoch_list, accuracy_list,label="accuracy" )
+fig = plt.gcf()
+fig.set_size_inches(5,3)
+plt.ylim(0.8,1) # 设置y轴的范围
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend()
+plt.show()
