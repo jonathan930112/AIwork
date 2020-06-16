@@ -12,3 +12,9 @@ print('train images:', mnist.train.images.shape,
       'labels:', mnist.train.labels.shape)
 
 len(mnist.train.images[0])
+
+import matplotlib.pyplot as plt
+def plot_image(image):
+    plt.imshow(image.reshape(28,28),cmap='binary')
+    plt.show()
+plot_image(mnist.train.images[0])
