@@ -81,3 +81,16 @@ h1=layer(output_dim=256,input_dim=784,
 y_predict=layer(output_dim=10,input_dim=256,
                     inputs=h1,activation=None)
 
+# 建立训练数据 label 真实值的 placeholder
+y_label = tf.placeholder("float", [None, 10])
+
+# 定义 loss function
+
+loss_function = tf.reduce_mean(
+                  tf.nn.softmax_cross_entropy_with_logits
+                         (logits=y_predict , 
+                          labels=y_label))
+
+# 选择 optimizer
+optimizer = tf.train.AdamOptimizer(learning_rate=0.001) \
+                    .minimize(loss_function)
