@@ -113,3 +113,26 @@ startTime=time()
 sess = tf.Session() # 	计算时间
 sess.run(tf.global_variables_initializer())
 
+# for each epoch
+for epoch in range(trainEpochs):
+    # for each mini-batch
+    for i in range(totalBatchs):
+        # 调用读mini-batch的函数
+        batch_x, batch_y = mnist.train.next_batch(batchSize)
+        # 训练优化器，最小化损失函数，输入x和y
+        sess.run(optimizer,feed_dict={x: batch_x,y_label: batch_y})
+    # 在验证集上计算精度和误差
+    loss,acc = sess.run([loss_function,accuracy],
+                        feed_dict={x: mnist.validation.images, 
+                                   y_label: mnist.validation.labels})
+    # 显示训练结果并存入列表
+    epoch_list.append(epoch)
+    loss_list.append(loss)
+    accuracy_list.append(acc)    
+    print("Train Epoch:", '%02d' % (epoch+1), "Loss=", \
+                "{:.9f}".format(loss)," Accuracy=",acc)
+                
+# 计算训练的时间 
+duration =time()-startTime
+print("Train Finished takes:",duration)
+
